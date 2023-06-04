@@ -1,13 +1,11 @@
 // Write your code here
-
+import {Component} from 'react'
 import {GrFormClose} from 'react-icons/gr'
 import './index.css'
 
-const Notification = props => {
-  const {Heading, Icon, Description} = props
-
-  const getHeadingColor = () => {
-    switch (Heading) {
+class Notification extends Component {
+  getHeadingColor = differentColor => {
+    switch (differentColor) {
       case 'Success':
         return 'success-color'
       case 'Error':
@@ -21,22 +19,24 @@ const Notification = props => {
     }
   }
 
-  const headingColor = getHeadingColor()
-
-  return (
-    <div className="notification-container">
-      <div className="icon-container">
-        <Icon className={`icon ${headingColor}`} />
-        <div className="alert-details-container">
-          <h1 className={`main-heading-notification ${headingColor}`}>
-            {Heading}
-          </h1>
-          <p className="description">{Description}</p>
+  render() {
+    const {children} = this.props
+    const headingColor = this.getHeadingColor(children[0])
+    return (
+      <div className="notification-container">
+        <div className="icon-container">
+          <div className={`icon ${headingColor}`}>{children[1]}</div>
+          <div className="alert-details-container">
+            <h1 className={`main-heading-notification ${headingColor}`}>
+              {children[0]}
+            </h1>
+            <p className="description">{children[2]}</p>
+          </div>
         </div>
+        <GrFormClose className="close-icon" />
       </div>
-      <GrFormClose className="close-icon" />
-    </div>
-  )
+    )
+  }
 }
 
 export default Notification
